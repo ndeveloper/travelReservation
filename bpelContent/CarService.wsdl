@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="CarServiceService" targetNamespace="http://auto.travel.ndeveloper.com/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://auto.travel.ndeveloper.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <types>
+    <xs:schema targetNamespace="http://auto.travel.ndeveloper.com/" version="1.0" xmlns:tns="http://auto.travel.ndeveloper.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="makeCarReservation" type="tns:makeCarReservation"/>
+   <xs:element name="makeCarReservationResponse" type="tns:makeCarReservationResponse"/>
+   <xs:complexType name="makeCarReservation">
+    <xs:sequence>
+     <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+     <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+     <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="makeCarReservationResponse">
+    <xs:sequence>
+     <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+   </xs:complexType>
+  </xs:schema>
+  </types>
+  <message name="CarService_makeCarReservation">
+    <part name="makeCarReservation" element="tns:makeCarReservation">
+    </part>
+  </message>
+  <message name="CarService_makeCarReservationResponse">
+    <part name="makeCarReservationResponse" element="tns:makeCarReservationResponse">
+    </part>
+  </message>
+  <portType name="CarService">
+    <operation name="makeCarReservation" parameterOrder="makeCarReservation">
+      <input message="tns:CarService_makeCarReservation">
+    </input>
+      <output message="tns:CarService_makeCarReservationResponse">
+    </output>
+    </operation>
+  </portType>
+  <binding name="CarServiceBinding" type="tns:CarService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="makeCarReservation">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="CarServiceService">
+    <port name="CarServicePort" binding="tns:CarServiceBinding">
+      <soap:address location="http://localhost:8080/travelService/CarService"/>
+    </port>
+  </service>
+</definitions>

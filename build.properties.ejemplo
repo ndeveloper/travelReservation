@@ -1,0 +1,4 @@
+# JBoss Application Server
+jboss.home=/home/pablo/java/servers/jboss-soa-p-5/jboss-as
+jboss.server.configuration=default
+deploy.dir=${jboss.home}/server/${jboss.server.configuration}/deploy

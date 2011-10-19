@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project name="travelReservation?wsdl" resourceRoot="" soapui-version="3.0.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="HotelServiceBinding" type="wsdl" bindingName="{http://hotel.travel.ndeveloper.cmo/}HotelServiceBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/travelReservation?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/travelReservation?wsdl"><con:part><con:url>http://localhost:8080/travelReservation?wsdl</con:url><con:content><![CDATA[<definitions name="travelReservation" targetNamespace="http://ndeveloper.com/bpel/travel" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ndeveloper.com/bpel/travel" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://hotel.travel.ndeveloper.cmo/" xmlns:wsdl1="http://auto.travel.ndeveloper.cmo/">
+  <import location="http://localhost:8080/travelReservation?wsdl&amp;resource=CarService.wsdl" namespace="http://auto.travel.ndeveloper.cmo/"/>
+  <import location="http://localhost:8080/travelReservation?wsdl&amp;resource=HotelService.wsdl" namespace="http://hotel.travel.ndeveloper.cmo/"/>
+  <types>
+    <schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ndeveloper.com/bpel/travel" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="travelReservationRequest">
+        <complexType>
+          <sequence>
+            <element name="roomNumber" type="int"/>
+            <element name="dateFrom" type="date"/>
+            <element name="dateTo" type="date"/>
+            <element name="name" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="travelReservationResponse">
+        <complexType>
+          <sequence>
+            <element name="result" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="travelReservationRequestMessage">
+    <part element="tns:travelReservationRequest" name="payload"/>
+  </message>
+  <message name="travelReservationResponseMessage">
+    <part element="tns:travelReservationResponse" name="payload"/>
+  </message>
+  <portType name="travelReservation">
+    <operation name="process">
+      <input message="tns:travelReservationRequestMessage"/>
+      <output message="tns:travelReservationResponseMessage"/>
+    </operation>
+  </portType>
+  <binding name="travelReservationBinding" type="tns:travelReservation">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="process">
+      <soap:operation soapAction="http://ndeveloper.com/bpel/travel/process"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="travelReservation">
+    <port binding="tns:travelReservationBinding" name="travelReservationPort">
+      <soap:address location="http://localhost:8080/travelReservation"/>
+    </port>
+  </service>
+  <plnk:partnerLinkType name="hotelPLType">
+    <plnk:role name="nombreRole" portType="wsdl:HotelService"/>
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="carServicePLType">
+    <plnk:role name="reserveCarRole" portType="wsdl1:CarService"/>
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="travelReservation">
+    <plnk:role name="travelReservationProvider" portType="tns:travelReservation"/>
+  </plnk:partnerLinkType>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/travelReservation?wsdl&amp;resource=CarService.wsdl</con:url><con:content><![CDATA[<definitions name="CarServiceService" targetNamespace="http://auto.travel.ndeveloper.cmo/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://auto.travel.ndeveloper.cmo/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <types>
+    <xs:schema targetNamespace="http://auto.travel.ndeveloper.cmo/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="makeCarReservation" type="tns:makeCarReservation"/>
+      <xs:element name="makeCarReservationResponse" type="tns:makeCarReservationResponse"/>
+      <xs:complexType name="makeCarReservation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="makeCarReservationResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="CarService_makeCarReservation">
+    <part element="tns:makeCarReservation" name="makeCarReservation"/>
+  </message>
+  <message name="CarService_makeCarReservationResponse">
+    <part element="tns:makeCarReservationResponse" name="makeCarReservationResponse"/>
+  </message>
+  <portType name="CarService">
+    <operation name="makeCarReservation" parameterOrder="makeCarReservation">
+      <input message="tns:CarService_makeCarReservation"/>
+      <output message="tns:CarService_makeCarReservationResponse"/>
+    </operation>
+  </portType>
+  <binding name="CarServiceBinding" type="tns:CarService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="makeCarReservation">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="CarServiceService">
+    <port binding="tns:CarServiceBinding" name="CarServicePort">
+      <soap:address location="http://localhost:8080/travelService/CarService"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/travelReservation?wsdl&amp;resource=HotelService.wsdl</con:url><con:content><![CDATA[<definitions name="HotelServiceService" targetNamespace="http://hotel.travel.ndeveloper.cmo/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://hotel.travel.ndeveloper.cmo/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <types>
+    <xs:schema targetNamespace="http://hotel.travel.ndeveloper.cmo/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="isAvailable" type="tns:isAvailable"/>
+      <xs:element name="isAvailableResponse" type="tns:isAvailableResponse"/>
+      <xs:element name="makeRservation" type="tns:makeRservation"/>
+      <xs:element name="makeRservationResponse" type="tns:makeRservationResponse"/>
+      <xs:complexType name="isAvailable">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="isAvailableResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="makeRservation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="makeRservationResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="HotelService_isAvailableResponse">
+    <part element="tns:isAvailableResponse" name="isAvailableResponse"/>
+  </message>
+  <message name="HotelService_makeRservationResponse">
+    <part element="tns:makeRservationResponse" name="makeRservationResponse"/>
+  </message>
+  <message name="HotelService_makeRservation">
+    <part element="tns:makeRservation" name="makeRservation"/>
+  </message>
+  <message name="HotelService_isAvailable">
+    <part element="tns:isAvailable" name="isAvailable"/>
+  </message>
+  <portType name="HotelService">
+    <operation name="isAvailable" parameterOrder="isAvailable">
+      <input message="tns:HotelService_isAvailable"/>
+      <output message="tns:HotelService_isAvailableResponse"/>
+    </operation>
+    <operation name="makeRservation" parameterOrder="makeRservation">
+      <input message="tns:HotelService_makeRservation"/>
+      <output message="tns:HotelService_makeRservationResponse"/>
+    </operation>
+  </portType>
+  <binding name="HotelServiceBinding" type="tns:HotelService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="isAvailable">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="makeRservation">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="HotelServiceService">
+    <port binding="tns:HotelServiceBinding" name="HotelServicePort">
+      <soap:address location="http://localhost:8080/travelService/HotelService"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/hotelService/HotelService</con:endpoint><con:endpoint>http://localhost:8080/travelService/HotelService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="isAvailable" bindingOperationName="isAvailable" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/travelService/HotelService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hot="http://hotel.travel.ndeveloper.cmo/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hot:isAvailable>
+         <!--Optional:-->
+         <arg0>?</arg0>
+         <!--Optional:-->
+         <arg1>?</arg1>
+         <!--Optional:-->
+         <arg2>?</arg2>
+      </hot:isAvailable>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ndeveloper.com/bpel/travel/HotelService/isAvailableRequest"/></con:call></con:operation><con:operation isOneWay="false" action="" name="makeRservation" bindingOperationName="makeRservation" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/travelService/HotelService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:hot="http://hotel.travel.ndeveloper.cmo/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <hot:makeRservation>
+         <!--Optional:-->
+         <arg0>?</arg0>
+         <!--Optional:-->
+         <arg1>?</arg1>
+         <!--Optional:-->
+         <arg2>?</arg2>
+         <!--Optional:-->
+         <arg3>?</arg3>
+      </hot:makeRservation>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ndeveloper.com/bpel/travel/HotelService/makeRservationRequest"/></con:call></con:operation></con:interface><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="travelReservationBinding" type="wsdl" bindingName="{http://ndeveloper.com/bpel/travel}travelReservationBinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/travelReservation?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/travelReservation?wsdl"><con:part><con:url>http://localhost:8080/travelReservation?wsdl</con:url><con:content><![CDATA[<definitions name="travelReservation" targetNamespace="http://ndeveloper.com/bpel/travel" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ndeveloper.com/bpel/travel" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://hotel.travel.ndeveloper.cmo/">
+  <import location="http://localhost:8080/travelReservation?wsdl&amp;resource=HotelService.wsdl" namespace="http://hotel.travel.ndeveloper.cmo/"/>
+  <types>
+    <schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ndeveloper.com/bpel/travel" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="travelReservationRequest">
+        <complexType>
+          <sequence>
+            <element name="roomNumber" type="int"/>
+            <element name="dateFrom" type="date"/>
+            <element name="dateTo" type="date"/>
+            <element name="name" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+      <element name="travelReservationResponse">
+        <complexType>
+          <sequence>
+            <element name="result" type="string"/>
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="travelReservationRequestMessage">
+    <part element="tns:travelReservationRequest" name="payload"/>
+  </message>
+  <message name="travelReservationResponseMessage">
+    <part element="tns:travelReservationResponse" name="payload"/>
+  </message>
+  <portType name="travelReservation">
+    <operation name="process">
+      <input message="tns:travelReservationRequestMessage"/>
+      <output message="tns:travelReservationResponseMessage"/>
+    </operation>
+  </portType>
+  <binding name="travelReservationBinding" type="tns:travelReservation">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="process">
+      <soap:operation soapAction="http://ndeveloper.com/bpel/travel/process"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="travelReservation">
+    <port binding="tns:travelReservationBinding" name="travelReservationPort">
+      <soap:address location="http://localhost:8080/travelReservation"/>
+    </port>
+  </service>
+  <plnk:partnerLinkType name="hotelPLType">
+    <plnk:role name="nombreRole" portType="wsdl:HotelService"/>
+  </plnk:partnerLinkType>
+  <plnk:partnerLinkType name="travelReservation">
+    <plnk:role name="travelReservationProvider" portType="tns:travelReservation"/>
+  </plnk:partnerLinkType>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://localhost:8080/travelReservation?wsdl&amp;resource=HotelService.wsdl</con:url><con:content><![CDATA[<definitions name="HotelServiceService" targetNamespace="http://hotel.travel.ndeveloper.cmo/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://hotel.travel.ndeveloper.cmo/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <types>
+    <xs:schema targetNamespace="http://hotel.travel.ndeveloper.cmo/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="isAvailable" type="tns:isAvailable"/>
+      <xs:element name="isAvailableResponse" type="tns:isAvailableResponse"/>
+      <xs:element name="makeRservation" type="tns:makeRservation"/>
+      <xs:element name="makeRservationResponse" type="tns:makeRservationResponse"/>
+      <xs:complexType name="isAvailable">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="isAvailableResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="makeRservation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="makeRservationResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="HotelService_isAvailableResponse">
+    <part element="tns:isAvailableResponse" name="isAvailableResponse"/>
+  </message>
+  <message name="HotelService_makeRservationResponse">
+    <part element="tns:makeRservationResponse" name="makeRservationResponse"/>
+  </message>
+  <message name="HotelService_makeRservation">
+    <part element="tns:makeRservation" name="makeRservation"/>
+  </message>
+  <message name="HotelService_isAvailable">
+    <part element="tns:isAvailable" name="isAvailable"/>
+  </message>
+  <portType name="HotelService">
+    <operation name="isAvailable" parameterOrder="isAvailable">
+      <input message="tns:HotelService_isAvailable"/>
+      <output message="tns:HotelService_isAvailableResponse"/>
+    </operation>
+    <operation name="makeRservation" parameterOrder="makeRservation">
+      <input message="tns:HotelService_makeRservation"/>
+      <output message="tns:HotelService_makeRservationResponse"/>
+    </operation>
+  </portType>
+  <binding name="HotelServiceBinding" type="tns:HotelService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="isAvailable">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="makeRservation">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="HotelServiceService">
+    <port binding="tns:HotelServiceBinding" name="HotelServicePort">
+      <soap:address location="http://localhost:8080/hotelService/HotelService"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/travelReservation</con:endpoint></con:endpoints><con:operation isOneWay="false" action="http://ndeveloper.com/bpel/travel/process" name="process" bindingOperationName="process" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/travelReservation</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:trav="http://ndeveloper.com/bpel/travel">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <trav:travelReservationRequest>
+         <trav:roomNumber>10</trav:roomNumber>
+         <trav:dateFrom>2001-12-31T12:00:00</trav:dateFrom>
+         <trav:dateTo>2001-12-31T12:00:00</trav:dateTo>
+         <trav:name>Pablo</trav:name>
+      </trav:travelReservationRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ndeveloper.com/bpel/travel/process"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>

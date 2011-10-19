@@ -1,0 +1,7 @@
+- Copiar el archivo build.properties.ejemplo con el nombre build.properties
+- Editar el archivo copiado, en la variable jboss.home poner la ruta donde se encuentra
+  instalado el  servidor de aplicaciones.
+- Ejecutar la tarea deploy del archivo build.xml para generar y deployar las aplicaciones
+- Ejecutar la tarea undeploy del archivo build.xml para retirar las aplicaciones del servidor
+- Si las aplicaciones se deployaron correctamente debe estar expuesto el servicio web en la 
+  siguiente dirección: http://localhost:8080/travelReservation?wsdl

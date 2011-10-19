@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy xmlns="http://www.apache.org/ode/schemas/dd/2007/03" xmlns:travel="http://ndeveloper.com/bpel/travel"
+	xmlns:wsdl="http://hotel.travel.ndeveloper.com/"
+	xmlns:wsdl1="http://auto.travel.ndeveloper.com/">
+  <process name="travel:travelReservation">
+    <process-events generate="all"/>
+    <provide partnerLink="client">
+      <service name="travel:travelReservation" port="travelReservationPort"/>
+    </provide>
+    <invoke partnerLink="hotelPL">
+    	<service name="wsdl:HotelServiceService" port="HotelServicePort"/>
+    </invoke>
+    <invoke partnerLink="carPL">
+    	<service name="wsdl1:CarServiceService" port="CarServicePort"/>
+    </invoke>
+  </process>
+</deploy>

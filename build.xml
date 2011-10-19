@@ -1,0 +1,46 @@
+<project name="Travel_reservation_service" default="deploy" basedir=".">
+	
+	<description> 
+		${ant.project.name}
+		${line.separator}
+	</description>
+	
+	<property file="build.properties" />
+
+	<!--
+	<import file="../conf/riftsaw-base-build.xml"/>
+	-->
+	
+	<property name="version" value="1" />
+
+	<property name="sample.jar.name" value="${ant.project.name}-${version}.jar" />
+	<property name="sample.esb.name" value="TravelReservation.esb" />
+
+	<target name="deployesb" >
+		<jar basedir="esbcontent" destfile="${deploy.dir}/${sample.esb.name}" />
+	</target>
+
+	<target name="undeployesb">
+		<delete file="${deploy.dir}/${sample.esb.name}"/>
+	</target>
+	
+	<target name="deploy" depends="deployesb" >
+		<echo>Deploy ${ant.project.name}</echo>
+		<jar basedir="bpelContent" destfile="${deploy.dir}/${sample.jar.name}" />
+	</target> 
+ 
+	<target name="undeploy" depends="undeployesb" >
+		<echo>Undeploy ${ant.project.name}</echo>
+		<delete file="${deploy.dir}/${sample.jar.name}" />
+	</target>  
+	
+	<target name="runtest">
+		<echo>Send test message to: ${ant.project.name}</echo>
+	       	<java classname="org.apache.ode.tools.sendsoap.cline.HttpSoapSender">
+	         	<arg value="http://localhost:8080/Quickstart_bpel_approval_serviceWS"/>
+	         	<arg value="messages/approve_request1.xml"/>
+				<classpath refid="rs-exec-classpath"/>
+	       </java>
+	</target>  
+	
+</project>

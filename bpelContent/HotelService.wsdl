@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="HotelServiceService" targetNamespace="http://hotel.travel.ndeveloper.com/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://hotel.travel.ndeveloper.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <types>
+    <xs:schema targetNamespace="http://hotel.travel.ndeveloper.com/" version="1.0" xmlns:tns="http://hotel.travel.ndeveloper.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="isAvailable" type="tns:isAvailable"/>
+   <xs:element name="isAvailableResponse" type="tns:isAvailableResponse"/>
+   <xs:element name="makeRservation" type="tns:makeRservation"/>
+   <xs:element name="makeRservationResponse" type="tns:makeRservationResponse"/>
+   <xs:complexType name="isAvailable">
+    <xs:sequence>
+     <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+     <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+     <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="isAvailableResponse">
+    <xs:sequence>
+     <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="makeRservation">
+    <xs:sequence>
+     <xs:element minOccurs="0" name="arg0" type="xs:int"/>
+     <xs:element minOccurs="0" name="arg1" type="xs:dateTime"/>
+     <xs:element minOccurs="0" name="arg2" type="xs:dateTime"/>
+     <xs:element minOccurs="0" name="arg3" type="xs:string"/>
+    </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="makeRservationResponse">
+    <xs:sequence>
+     <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+   </xs:complexType>
+  </xs:schema>
+  </types>
+  <message name="HotelService_isAvailableResponse">
+    <part name="isAvailableResponse" element="tns:isAvailableResponse">
+    </part>
+  </message>
+  <message name="HotelService_makeRservationResponse">
+    <part name="makeRservationResponse" element="tns:makeRservationResponse">
+    </part>
+  </message>
+  <message name="HotelService_makeRservation">
+    <part name="makeRservation" element="tns:makeRservation">
+    </part>
+  </message>
+  <message name="HotelService_isAvailable">
+    <part name="isAvailable" element="tns:isAvailable">
+    </part>
+  </message>
+  <portType name="HotelService">
+    <operation name="isAvailable" parameterOrder="isAvailable">
+      <input message="tns:HotelService_isAvailable">
+    </input>
+      <output message="tns:HotelService_isAvailableResponse">
+    </output>
+    </operation>
+    <operation name="makeRservation" parameterOrder="makeRservation">
+      <input message="tns:HotelService_makeRservation">
+    </input>
+      <output message="tns:HotelService_makeRservationResponse">
+    </output>
+    </operation>
+  </portType>
+  <binding name="HotelServiceBinding" type="tns:HotelService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="isAvailable">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="makeRservation">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="HotelServiceService">
+    <port name="HotelServicePort" binding="tns:HotelServiceBinding">
+      <soap:address location="http://localhost:8080/travelService/HotelService"/>
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ndeveloper.com/bpel/travel" xmlns:vprop="http://docs.oasis-open.org/wsbpel/2.0/varprop" xmlns:wsdl="http://hotel.travel.ndeveloper.com/" xmlns:wsdl1="http://auto.travel.ndeveloper.com/" name="travelReservation" targetNamespace="http://ndeveloper.com/bpel/travel">
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     TYPE DEFINITION - List of types participating in this BPEL process 
+     The BPEL Designer will generate default request and response types
+     but you can define or import any XML Schema type and use them as part 
+     of the message types.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="hotelPLType">
+    <plnk:role name="nombreRole" portType="wsdl:HotelService"/>
+  </plnk:partnerLinkType>
+    <plnk:partnerLinkType name="carServicePLType">
+    <plnk:role name="reserveCarRole" portType="wsdl1:CarService"/>
+  </plnk:partnerLinkType>
+    <import location="HotelService.wsdl" namespace="http://hotel.travel.ndeveloper.com/"/>
+    <import location="CarService.wsdl" namespace="http://auto.travel.ndeveloper.com/"/>
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ndeveloper.com/bpel/travel">
+
+            <element name="travelReservationRequest">
+                <complexType>
+                    <sequence>
+                    	<element name="roomNumber" type="int" />
+                    	<element name="dateFrom" type="date" />
+                    	<element name="dateTo" type="date" />
+                    	<element name="name" type="string" />
+                    	<element name="dapartureTime" type="time"></element>
+                    	<element name="destination" type="string"></element>
+                    </sequence>
+                </complexType>
+            </element>
+
+            <element name="travelReservationResponse">
+                <complexType>
+                    <sequence>
+                        <element name="result" type="string"/>
+                    </sequence>
+                </complexType>
+            </element>
+        </schema>
+    </types>
+
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     MESSAGE TYPE DEFINITION - Definition of the message types used as 
+     part of the port type defintions
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <message name="travelReservationRequestMessage">
+        <part element="tns:travelReservationRequest" name="payload"/>
+    </message>
+    <message name="travelReservationResponseMessage">
+        <part element="tns:travelReservationResponse" name="payload"/>
+    </message>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PORT TYPE DEFINITION - A port type groups a set of operations into
+     a logical service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+
+    <!-- portType implemented by the travelReservation BPEL process -->
+    <portType name="travelReservation">
+        <operation name="process">
+            <input message="tns:travelReservationRequestMessage"/>
+            <output message="tns:travelReservationResponseMessage"/>
+        </operation>
+    </portType>   
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     PARTNER LINK TYPE DEFINITION
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->    
+    <plnk:partnerLinkType name="travelReservation">
+        <plnk:role name="travelReservationProvider" portType="tns:travelReservation"/>
+    </plnk:partnerLinkType>
+    
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     BINDING DEFINITION - Defines the message format and protocol details
+     for a web service.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <binding name="travelReservationBinding" type="tns:travelReservation">
+    	<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    	<operation name="process">
+    		<soap:operation soapAction="http://ndeveloper.com/bpel/travel/process"/>
+    		<input>
+    			<soap:body use="literal"/>
+    		</input>
+    		<output>
+    			<soap:body use="literal"/>
+    		</output>
+    	</operation>
+    </binding>
+
+<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+     SERVICE DEFINITION - A service groups a set of ports into
+     a service unit.
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+    <service name="travelReservation">
+    	<port binding="tns:travelReservationBinding" name="travelReservationPort">
+    		<soap:address location="http://localhost:8080/travelReservation"/>
+    	</port>
+    </service>
+</definitions>
