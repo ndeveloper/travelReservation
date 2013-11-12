@@ -6,3 +6,4 @@
 - Si las aplicaciones se deployaron correctamente debe estar expuesto el servicio web en la 
   siguiente dirección: http://localhost:8080/travelReservation?wsdl
 - Desde tableta
+- browser
