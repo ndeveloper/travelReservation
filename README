@@ -5,3 +5,4 @@
 - Ejecutar la tarea undeploy del archivo build.xml para retirar las aplicaciones del servidor
 - Si las aplicaciones se deployaron correctamente debe estar expuesto el servicio web en la 
   siguiente dirección: http://localhost:8080/travelReservation?wsdl
+- Desde tableta
